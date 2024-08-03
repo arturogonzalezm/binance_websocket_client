@@ -34,9 +34,9 @@ This project implements a WebSocket client for the Binance cryptocurrency exchan
    ```
 
 4. Test:
-  ```bash
-  mix test
-  ```
+   ```bash
+   mix test
+   ```
 
 ## Usage
 
@@ -108,14 +108,6 @@ To run the test suite:
 ```
 mix test
 ```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -am 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## License
 
