@@ -5,6 +5,7 @@ defmodule BinanceWebsocketClient.Application do
   @impl true
   def start(_type, _args) do
     Logger.info("Starting BinanceWebsocketClient.Application")
+
     children = [
       {BinanceWebsocketClient.TickerStore, []},
       {BinanceWebsocketClient, []}
@@ -16,6 +17,7 @@ defmodule BinanceWebsocketClient.Application do
       {:ok, pid} ->
         Logger.info("BinanceWebsocketClient.Application started successfully")
         {:ok, pid}
+
       {:error, reason} ->
         Logger.error("Failed to start BinanceWebsocketClient.Application: #{inspect(reason)}")
         {:error, reason}

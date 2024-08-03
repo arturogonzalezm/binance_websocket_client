@@ -2,12 +2,22 @@ defmodule BinanceWebsocketClient do
   use WebSockex
   require Logger
 
-  @websocket_client Application.compile_env(:binance_websocket_client, :websocket_client, WebSockex)
+  @websocket_client Application.compile_env(
+                      :binance_websocket_client,
+                      :websocket_client,
+                      WebSockex
+                    )
 
   def start_link(opts \\ []) do
     Logger.info("Starting BinanceWebsocketClient")
     url = "wss://stream.binance.com:9443/ws/btcusdt@ticker"
-    @websocket_client.start_link(url, __MODULE__, %{ticker_store: Keyword.get(opts, :ticker_store, BinanceWebsocketClient.TickerStore)}, opts)
+
+    @websocket_client.start_link(
+      url,
+      __MODULE__,
+      %{ticker_store: Keyword.get(opts, :ticker_store, BinanceWebsocketClient.TickerStore)},
+      opts
+    )
   end
 
   def handle_connect(_conn, state) do
@@ -27,13 +37,16 @@ defmodule BinanceWebsocketClient do
 
   def handle_frame({:text, msg}, state) do
     Logger.debug("Received message: #{msg}")
+
     case Jason.decode(msg) do
       {:ok, event} ->
         Logger.debug("Decoded event: #{inspect(event)}")
         handle_event(event, state.ticker_store)
+
       {:error, reason} ->
         Logger.error("Error decoding JSON: #{inspect(reason)}")
     end
+
     {:ok, state}
   end
 
@@ -44,8 +57,11 @@ defmodule BinanceWebsocketClient do
 
   defp handle_event(%{"e" => "24hrTicker", "s" => "BTCUSDT"} = event, ticker_store) do
     Logger.info("Handling BTCUSDT ticker event")
+
     case BinanceWebsocketClient.TickerStore.update(event, ticker_store) do
-      :ok -> :ok
+      :ok ->
+        :ok
+
       {:error, reason} ->
         Logger.error("Failed to update TickerStore: #{inspect(reason)}")
     end

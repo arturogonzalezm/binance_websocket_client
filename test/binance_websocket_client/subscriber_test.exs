@@ -24,7 +24,8 @@ defmodule BinanceWebsocketClient.SubscriberTest do
     handler = fn ticker -> send(test_pid, {:handled, ticker}) end
     filter = fn ticker -> String.to_integer(ticker["volume"]) > 500 end
 
-    {:ok, _pid} = Subscriber.start_link(handler: handler, filter: filter, ticker_store: store_name)
+    {:ok, _pid} =
+      Subscriber.start_link(handler: handler, filter: filter, ticker_store: store_name)
 
     # This update should not pass the filter
     TickerStore.update(%{"price" => "54000", "volume" => "400"}, store_name)

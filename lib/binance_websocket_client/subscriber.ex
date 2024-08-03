@@ -25,10 +25,12 @@ defmodule BinanceWebsocketClient.Subscriber do
       {:stop, {:error, :no_handler_specified}}
     else
       Logger.info("Initializing Subscriber with handler: #{inspect(state.handler)}")
+
       case BinanceWebsocketClient.TickerStore.subscribe(self(), state.ticker_store) do
         :ok ->
           Logger.info("Successfully subscribed to TickerStore")
           {:ok, state}
+
         {:error, reason} ->
           Logger.error("Failed to subscribe to TickerStore: #{inspect(reason)}")
           {:stop, reason}
@@ -39,8 +41,10 @@ defmodule BinanceWebsocketClient.Subscriber do
   @impl true
   def handle_info({:ticker_update, ticker_data}, state) do
     Logger.debug("Received ticker update: #{inspect(ticker_data)}")
+
     if state.filter.(ticker_data) do
       Logger.debug("Ticker update passed filter, calling handler")
+
       try do
         state.handler.(ticker_data)
       rescue
@@ -50,6 +54,7 @@ defmodule BinanceWebsocketClient.Subscriber do
     else
       Logger.debug("Ticker update did not pass filter")
     end
+
     {:noreply, state}
   end
 

@@ -4,19 +4,26 @@ defmodule BinanceWebsocketClientTest do
   setup do
     store_name = :"TickerStore#{System.unique_integer()}"
     {:ok, store} = start_supervised({BinanceWebsocketClient.TickerStore, name: store_name})
-    Application.put_env(:binance_websocket_client, :websocket_client, BinanceWebsocketClient.WebSocketClientStub)
+
+    Application.put_env(
+      :binance_websocket_client,
+      :websocket_client,
+      BinanceWebsocketClient.WebSocketClientStub
+    )
+
     {:ok, client} = BinanceWebsocketClient.start_link(ticker_store: store_name)
     %{client: client, store: store, store_name: store_name}
   end
 
   test "handles ticker updates", %{client: client, store_name: store_name} do
-    ticker_data = Jason.encode!(%{
-      "e" => "24hrTicker",
-      "s" => "BTCUSDT",
-      "c" => "50000",
-      "p" => "1000",
-      "P" => "2"
-    })
+    ticker_data =
+      Jason.encode!(%{
+        "e" => "24hrTicker",
+        "s" => "BTCUSDT",
+        "c" => "50000",
+        "p" => "1000",
+        "P" => "2"
+      })
 
     send(client, {:handle_frame, {:text, ticker_data}})
 
@@ -30,13 +37,14 @@ defmodule BinanceWebsocketClientTest do
   end
 
   test "ignores non-BTCUSDT updates", %{client: client, store_name: store_name} do
-    ticker_data = Jason.encode!(%{
-      "e" => "24hrTicker",
-      "s" => "ETHUSDT",
-      "c" => "3000",
-      "p" => "100",
-      "P" => "3"
-    })
+    ticker_data =
+      Jason.encode!(%{
+        "e" => "24hrTicker",
+        "s" => "ETHUSDT",
+        "c" => "3000",
+        "p" => "100",
+        "P" => "3"
+      })
 
     send(client, {:handle_frame, {:text, ticker_data}})
 

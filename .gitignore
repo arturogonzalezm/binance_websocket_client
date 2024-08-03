@@ -47,6 +47,7 @@ binance_websocket_client-*.tar
 .idea/
 *.swp
 *.swo
+.idea/*
 
 # Ignore the Dialyzer PLT files
 /priv/plts/*.plt
