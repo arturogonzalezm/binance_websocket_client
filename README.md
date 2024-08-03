@@ -112,6 +112,28 @@ To run the test suite:
 mix test
 ```
 
+## TODO: 
+- Dockerise the Application
+- Add docker-compose file
+- Add CI/CD pipeline
+- Add more tests
+- Add InfluxDB for storing ticker data
+- Add Grafana for visualising ticker data
+- Add Prometheus for monitoring the application
+- Add Kubernetes for deploying the application
+- Add Helm for managing the Kubernetes deployment
+- Add Terraform for managing the infrastructure
+- Add Ansible for managing the configuration
+- Add Jenkins for automating the CI/CD pipeline
+- Add SonarQube for code quality analysis
+- Add ELK Stack for log management
+- Add Jaeger for distributed tracing
+- Add OpenTelemetry for observability
+- Add Sentry for error tracking
+- Add New Relic for application performance monitoring
+- Add Datadog for infrastructure monitoring
+- Build a front-end for visualising the data in real-time using Phoenix LiveView
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
