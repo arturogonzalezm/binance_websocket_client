@@ -55,3 +55,5 @@ binance_websocket_client-*.tar
 
 # Ignore any local configuration files that might contain sensitive information
 config/*.secret.exs
+.formatter.exs
+binance_websocket_client.iml

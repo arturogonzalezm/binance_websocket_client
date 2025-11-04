@@ -5,7 +5,7 @@ defmodule BinanceWebsocketClient.MixProject do
     [
       app: :binance_websocket_client,
       version: "0.1.0",
-      elixir: "~> 1.17",
+      elixir: "~> 1.19",
       elixirc_paths: elixirc_paths(Mix.env()),  # Add this line
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -39,7 +39,7 @@ defmodule BinanceWebsocketClient.MixProject do
       {:websockex, "~> 0.4.3"},
       {:jason, "~> 1.4"},
       {:mox, "~> 1.1.0", only: :test},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7.8", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.18", only: :test}
     ]

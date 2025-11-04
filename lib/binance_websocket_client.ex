@@ -8,6 +8,15 @@ defmodule BinanceWebsocketClient do
                       WebSockex
                     )
 
+  # Public API
+  def latest(store \\ BinanceWebsocketClient.TickerStore) do
+    BinanceWebsocketClient.TickerStore.get_latest(store)
+  end
+
+  def subscribe(handler, opts \\ []) when is_function(handler, 1) do
+    BinanceWebsocketClient.Subscriber.start_link(Keyword.put(opts, :handler, handler))
+  end
+
   def start_link(opts \\ []) do
     Logger.info("Starting BinanceWebsocketClient")
     url = "wss://stream.binance.com:9443/ws/btcusdt@ticker"

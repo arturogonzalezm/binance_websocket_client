@@ -59,20 +59,29 @@ Application.start(:binance_websocket_client)
 
 This will start the WebSocket client and connect to Binance's WebSocket server.
 
+### Getting the latest BTCUSDT ticker
+
+After starting the app, at any time you can fetch the most recent ticker payload the client received from Binance:
+
+```elixir
+BinanceWebsocketClient.latest()
+# => %{"e" => "24hrTicker", "s" => "BTCUSDT", ...}
+```
+
 ### Creating a Subscriber
 
-To receive updates:
+To receive real-time updates as they arrive:
 
 ```elixir
 handler = fn ticker -> IO.inspect(ticker, label: "Received ticker update") end
-{:ok, pid} = BinanceWebsocketClient.Subscriber.start_link(handler: handler)
+{:ok, pid} = BinanceWebsocketClient.subscribe(handler)
 ```
 
-To filter updates:
+To filter updates (for example, only when 24h change percent > 1%):
 
 ```elixir
 filter = fn ticker -> String.to_float(ticker["P"]) > 1.0 end
-{:ok, pid} = BinanceWebsocketClient.Subscriber.start_link(handler: handler, filter: filter)
+{:ok, pid} = BinanceWebsocketClient.subscribe(handler, filter: filter)
 ```
 
 ## Architecture
