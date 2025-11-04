@@ -12,7 +12,7 @@ defmodule BinanceWebsocketClient.WebSocketClientStub do
         module.handle_frame({type, msg}, state)
         loop(module, state)
 
-      {:handle_frame, {type, msg} = frame} ->
+      {:handle_frame, frame} ->
         module.handle_frame(frame, state)
         loop(module, state)
 
