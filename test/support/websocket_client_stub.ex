@@ -11,6 +11,14 @@ defmodule BinanceWebsocketClient.WebSocketClientStub do
       {:send, {type, msg}} ->
         module.handle_frame({type, msg}, state)
         loop(module, state)
+
+      {:handle_frame, {type, msg} = frame} ->
+        module.handle_frame(frame, state)
+        loop(module, state)
+
+      _other ->
+        # Ignore unknown messages to keep the stub alive
+        loop(module, state)
     end
   end
 
