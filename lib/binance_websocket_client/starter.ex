@@ -55,11 +55,9 @@ defmodule BinanceWebsocketClient.Starter do
   end
 
   defp safe_start_client(opts) do
-    try do
-      BinanceWebsocketClient.start_link(opts)
-    catch
-      kind, err ->
-        {:error, {kind, err}}
-    end
+    BinanceWebsocketClient.start_link(opts)
+  catch
+    kind, err ->
+      {:error, {kind, err}}
   end
 end
