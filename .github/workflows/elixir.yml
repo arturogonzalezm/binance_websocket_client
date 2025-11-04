@@ -2,34 +2,52 @@ name: Elixir CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+    branches: [ main, master ]
 
 jobs:
-  build:
-    name: Build and test
+  test:
     runs-on: ubuntu-latest
-
+    env:
+      MIX_ENV: test
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Elixir
-      uses: erlef/setup-beam@v1
-      with:
-        elixir-version: '1.17.2' # [Required] Define the Elixir version
-        otp-version: '26.0'    # [Required] Define the Erlang/OTP version
-    - name: Restore dependencies cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          deps
-          _build
-        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-        restore-keys: ${{ runner.os }}-mix-
-    - name: Install dependencies
-      run: mix deps.get
-    - name: Run tests
-      run: mix test
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Erlang/OTP and Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: '26.x'
+          elixir-version: '1.19.x'
+
+      - name: Cache deps and build
+        uses: actions/cache@v4
+        with:
+          path: |
+            deps
+            _build
+            ~/.mix
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+
+      - name: Install dependencies
+        run: mix deps.get --only $MIX_ENV
+
+      - name: Compile (warnings as errors)
+        run: mix compile --warnings-as-errors
+
+      - name: Check formatting
+        run: mix format --check-formatted
+
+      - name: Run Credo (lint)
+        run: mix credo --strict
+
+      - name: Run tests
+        run: mix test --trace
+
+      - name: Coverage (ExCoveralls GitHub)
+        if: ${{ github.event_name == 'pull_request' }}
+        run: mix coveralls.github

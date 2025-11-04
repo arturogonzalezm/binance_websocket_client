@@ -12,8 +12,8 @@ This project implements a WebSocket client for the Binance cryptocurrency exchan
 ## Prerequisites
 
 - Elixir 1.19 or later
-- Erlang (SMP,ASYNC_THREADS) (BEAM) emulator version 14.2.5
-- Erlang/OTP 26
+- Erlang (SMP,ASYNC_THREADS) (BEAM) emulator version 16.1
+- Erlang/OTP 28
 - IntelliJ IDEA Version 2025.1.6 with Elixir plugin (optional)
 - Homebrew
 - asdf for Elixir version management
