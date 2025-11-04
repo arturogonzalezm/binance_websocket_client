@@ -1,7 +1,7 @@
 defmodule BinanceWebsocketClientWeb.UserSocket do
   use Phoenix.Socket
 
-  channel "ticker:*", BinanceWebsocketClientWeb.TickerChannel
+  channel("ticker:*", BinanceWebsocketClientWeb.TickerChannel)
 
   @impl true
   def connect(_params, socket, _connect_info) do

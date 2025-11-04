@@ -6,7 +6,8 @@ defmodule BinanceWebsocketClient.MixProject do
       app: :binance_websocket_client,
       version: "0.1.0",
       elixir: "~> 1.19",
-      elixirc_paths: elixirc_paths(Mix.env()),  # Add this line
+      # Add this line
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       xref: [exclude: [:crypto]],
@@ -44,16 +45,16 @@ defmodule BinanceWebsocketClient.MixProject do
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
-    # Mix 1.19+: Configure preferred CLI envs here (formerly :preferred_cli_env in project/0)
-    def cli do
-      [
-        preferred_envs: [
-          coveralls: :test,
-          "coveralls.detail": :test,
-          "coveralls.post": :test,
-          "coveralls.html": :test,
-          "coveralls.github": :test
-        ]
+  # Mix 1.19+: Configure preferred CLI envs here (formerly :preferred_cli_env in project/0)
+  def cli do
+    [
+      preferred_envs: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        "coveralls.github": :test
       ]
-    end
+    ]
   end
+end
