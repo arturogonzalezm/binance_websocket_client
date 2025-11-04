@@ -28,7 +28,10 @@ defmodule BinanceWebsocketClient.Starter do
         {:noreply, %{state | client: pid}}
 
       {:error, reason} ->
-        Logger.error("Failed to start BinanceWebsocketClient: #{inspect(reason)}. Retrying in #{@retry_ms / 1000}s...")
+        Logger.error(
+          "Failed to start BinanceWebsocketClient: #{inspect(reason)}. Retrying in #{@retry_ms / 1000}s..."
+        )
+
         schedule_retry()
         {:noreply, %{state | client: nil}}
     end
@@ -36,7 +39,10 @@ defmodule BinanceWebsocketClient.Starter do
 
   @impl true
   def handle_info({:DOWN, _mref, :process, pid, reason}, %{client: pid} = state) do
-    Logger.warning("BinanceWebsocketClient terminated (pid=#{inspect(pid)}): #{inspect(reason)}. Retrying in #{@retry_ms / 1000}s...")
+    Logger.warning(
+      "BinanceWebsocketClient terminated (pid=#{inspect(pid)}): #{inspect(reason)}. Retrying in #{@retry_ms / 1000}s..."
+    )
+
     schedule_retry()
     {:noreply, %{state | client: nil}}
   end
