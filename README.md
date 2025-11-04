@@ -236,3 +236,34 @@ Notes:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Connection errors (HTTP 451) and configuration
+
+Some regions block access to Binance's global WebSocket endpoint and you may see an error like:
+
+```
+** (EXIT) %WebSockex.RequestError{code: 451, message: ""}
+```
+
+The application now starts even if the Binance WebSocket is temporarily unreachable or blocked. It will retry the connection every 15 seconds in the background.
+
+If you are in a restricted region, point the client to an alternative endpoint (for example, binance.us):
+
+```bash
+# Use binance.us 24h ticker for BTCUSDT
+export BINANCE_WS_URL="wss://stream.binance.us:9443/ws/btcusdt@ticker"
+# then start the app
+iex -S mix
+```
+
+You can also set the URL via config (default is the global binance.com endpoint):
+
+```elixir
+# config/config.exs
+config :binance_websocket_client, :ws_url, "wss://stream.binance.com:9443/ws/btcusdt@ticker"
+```
+
+Precedence for the WebSocket URL:
+- opts[:url] when starting the client programmatically
+- BINANCE_WS_URL environment variable
+- config :binance_websocket_client, :ws_url (default)

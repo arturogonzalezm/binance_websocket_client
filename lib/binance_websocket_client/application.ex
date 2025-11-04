@@ -10,7 +10,8 @@ defmodule BinanceWebsocketClient.Application do
     children = [
       # Data pipeline
       {BinanceWebsocketClient.TickerStore, []},
-      {BinanceWebsocketClient, []},
+      # Start a lightweight supervisor that connects to Binance and retries on failure
+      {BinanceWebsocketClient.Starter, []},
       # Phoenix PubSub and Endpoint for Channels
       {Phoenix.PubSub, name: BinanceWebsocketClient.PubSub},
       BinanceWebsocketClientWeb.Endpoint,

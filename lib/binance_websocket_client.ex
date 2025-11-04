@@ -20,7 +20,15 @@ defmodule BinanceWebsocketClient do
 
   def start_link(opts \\ []) do
     Logger.info("Starting BinanceWebsocketClient")
-    url = "wss://stream.binance.com:9443/ws/btcusdt@ticker"
+
+    default_url = "wss://stream.binance.com:9443/ws/btcusdt@ticker"
+
+    url =
+      Keyword.get(opts, :url) ||
+        System.get_env("BINANCE_WS_URL") ||
+        Application.get_env(:binance_websocket_client, :ws_url, default_url)
+
+    Logger.info("Connecting to WS: #{url}")
 
     @websocket_client.start_link(
       url,

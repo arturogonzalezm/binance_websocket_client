@@ -6,6 +6,9 @@ config :logger, :console,
 
 config :phoenix, :json_library, Jason
 
+# Default WebSocket URL (can be overridden by BINANCE_WS_URL env var)
+config :binance_websocket_client, :ws_url, "wss://stream.binance.com:9443/ws/btcusdt@ticker"
+
 # Phoenix Endpoint configuration for Channels
 config :binance_websocket_client, BinanceWebsocketClientWeb.Endpoint,
   url: [host: "localhost"],
