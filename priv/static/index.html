@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BTCUSDT Live Dashboard</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L21 7V17L12 22L3 17V7L12 2Z" stroke="#f8fafc" stroke-width="1.5"/><circle cx="12" cy="12" r="3.25" stroke="#22c55e" stroke-width="1.5"/></svg>
+      <span>BTCUSDT Live</span>
+    </div>
+    <div class="status" id="connStatus">Connecting…</div>
+  </header>
+
+  <main class="container">
+    <section class="grid">
+      <div class="card kpis">
+        <div class="kpi">
+          <div class="kpi-label">Price</div>
+          <div class="kpi-value" id="price">—</div>
+          <div class="kpi-sub" id="priceTime">—</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">24h Change</div>
+          <div class="kpi-value" id="change">—</div>
+          <div class="kpi-sub" id="changeAbs">—</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">24h High</div>
+          <div class="kpi-value" id="high">—</div>
+          <div class="kpi-sub">24h Low: <span id="low">—</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">24h Volume</div>
+          <div class="kpi-value" id="vol">—</div>
+          <div class="kpi-sub">USDT Vol: <span id="quoteVol">—</span></div>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="card-header">
+          <h3>Real-time Price</h3>
+          <div class="card-actions">
+            <button id="pauseBtn" class="btn">Pause</button>
+            <button id="clearBtn" class="btn btn-secondary">Clear</button>
+          </div>
+        </div>
+        <canvas id="priceChart"></canvas>
+      </div>
+
+      <div class="card feed">
+        <div class="card-header">
+          <h3>Live Feed</h3>
+          <div class="muted">Last 50 ticks</div>
+        </div>
+        <ul id="feed" class="feed-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>Data: Binance BTCUSDT 24hr Ticker (ws)</div>
+    <div>Built with Phoenix Channels</div>
+  </footer>
+
+  <script src="https://unpkg.com/phoenix@1.7.14/priv/static/phoenix.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -14,14 +14,7 @@ defmodule BinanceWebsocketClient.MixProject do
         plt_add_apps: [:mix],
         ignore_warnings: "dialyzer.ignore-warnings"
       ],
-      test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [
-        coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.post": :test,
-        "coveralls.html": :test,
-        "coveralls.github": :test
-     ]
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -50,4 +43,17 @@ defmodule BinanceWebsocketClient.MixProject do
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
-end
+
+    # Mix 1.19+: Configure preferred CLI envs here (formerly :preferred_cli_env in project/0)
+    def cli do
+      [
+        preferred_envs: [
+          coveralls: :test,
+          "coveralls.detail": :test,
+          "coveralls.post": :test,
+          "coveralls.html": :test,
+          "coveralls.github": :test
+        ]
+      ]
+    end
+  end

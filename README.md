@@ -11,10 +11,10 @@ This project implements a WebSocket client for the Binance cryptocurrency exchan
 
 ## Prerequisites
 
-- Elixir 1.17 or later
+- Elixir 1.19 or later
 - Erlang (SMP,ASYNC_THREADS) (BEAM) emulator version 14.2.5
 - Erlang/OTP 26
-- IntelliJ IDEA Version 2023.3.7 with Elixir plugin (optional)
+- IntelliJ IDEA Version 2025.1.6 with Elixir plugin (optional)
 - Homebrew
 - asdf for Elixir version management
 
@@ -210,6 +210,28 @@ From Elixir, you can also write a small client using Phoenix Channels protocol l
 Notes:
 - The WebSocket server only exposes the channel and does not serve HTML pages.
 - The topic is currently fixed to BTCUSDT. If you expand to multiple pairs, broadcast to corresponding topics like "ticker:ethusdt".
+
+## Web Dashboard (Phoenix)
+
+An elegant, minimal dashboard is included and served by the built‑in Phoenix endpoint.
+
+- URL: http://localhost:4000/
+- Live data via: ws://localhost:4000/socket (Phoenix Channels)
+- Topic: "ticker:btcusdt"
+- Features:
+  - Real‑time price line chart (Chart.js)
+  - Key KPIs: Price, 24h change %, high/low, base and quote volume
+  - Live feed of the last 50 ticks
+  - Pause/resume and Clear controls
+
+How to run:
+1. mix deps.get && mix compile
+2. iex -S mix
+3. Open http://localhost:4000/ in your browser.
+
+Notes:
+- The endpoint serves static assets from priv/static (index.html, styles.css, app.js).
+- If you don’t see data, confirm the console shows the connection status as "Live" and that your network allows outbound WebSocket connections.
 
 ## License
 

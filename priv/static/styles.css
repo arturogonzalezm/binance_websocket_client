@@ -1,0 +1,66 @@
+/* Reset & theme */
+:root{
+  --bg:#0b1020; --panel:#10162b; --panel-2:#0e1430; --muted:#94a3b8; --text:#e5e7eb; --accent:#22c55e; --accent-2:#60a5fa; --warn:#f59e0b; --danger:#ef4444;
+  --border: rgba(148,163,184,0.14);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  background:linear-gradient(180deg,#0a0f1e 0%,#080c18 100%); color:var(--text);
+}
+
+/* Header */
+.app-header{
+  position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between;
+  padding:16px 20px; background:rgba(9,14,28,.7); backdrop-filter:saturate(120%) blur(8px); border-bottom:1px solid var(--border);
+}
+.brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:0.3px}
+.status{font-size:14px; color:var(--muted)}
+.status.ok{color:var(--accent)}
+.status.err{color:var(--danger)}
+
+/* Layout */
+.container{max-width:1200px; margin:0 auto; padding:24px 16px}
+.grid{display:grid; grid-template-columns:1fr; gap:16px}
+@media (min-width:960px){.grid{grid-template-columns:1fr; gap:20px}}
+
+.card{
+  background:radial-gradient(1200px 300px at 10% -10%, rgba(34,197,94,0.06), transparent 40%),
+             radial-gradient(1000px 300px at 90% 110%, rgba(96,165,250,0.06), transparent 40%),
+             var(--panel);
+  border:1px solid var(--border); border-radius:14px; padding:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+.card-header{display:flex; align-items:center; justify-content:space-between; margin-bottom:8px}
+.card-header h3{margin:0; font-size:16px; font-weight:600}
+.card-actions{display:flex; gap:8px}
+
+/* KPIs */
+.kpis{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px}
+@media (min-width:800px){.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.kpi{padding:10px 12px; background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0)); border:1px solid var(--border); border-radius:12px}
+.kpi-label{font-size:12px; color:var(--muted); letter-spacing:.3px}
+.kpi-value{font-size:28px; font-weight:700; margin-top:6px}
+.kpi-sub{margin-top:6px; color:var(--muted); font-size:12px}
+
+/* Chart */
+.chart-card{padding:12px 12px 16px; display:flex; flex-direction:column; height:45vh; min-height:280px; max-height:70vh}
+canvas{width:100% !important; display:block; flex:1 1 auto}
+
+/* Feed */
+.feed-list{list-style:none; padding:0; margin:0; max-height:280px; overflow:auto}
+.feed-list li{display:flex; justify-content:space-between; padding:8px 6px; border-bottom:1px dashed var(--border); font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+.feed-list li .ts{color:var(--muted)}
+.feed-list li .p{font-weight:600}
+.feed-list li .chg.up{color:var(--accent)}
+.feed-list li .chg.down{color:#f87171}
+
+/* Buttons */
+.btn{appearance:none; border:1px solid var(--border); background:linear-gradient(180deg,#0f1428,#0c1224); color:var(--text); border-radius:10px; padding:8px 10px; font-weight:600; cursor:pointer}
+.btn:hover{border-color:#2b3653}
+.btn:active{transform:translateY(1px)}
+.btn-secondary{opacity:.9}
+
+/* Footer */
+.footer{display:flex; gap:10px; justify-content:space-between; color:var(--muted); font-size:12px; padding:16px; border-top:1px solid var(--border)}
