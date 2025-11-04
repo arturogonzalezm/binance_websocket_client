@@ -1,4 +1,5 @@
 defmodule BinanceWebsocketClient.Application do
+  @moduledoc false
   use Application
   require Logger
 

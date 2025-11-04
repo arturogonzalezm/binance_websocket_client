@@ -1,4 +1,5 @@
 defmodule BinanceWebsocketClientWeb.TickerChannel do
+  @moduledoc false
   use Phoenix.Channel
 
   alias BinanceWebsocketClient.TickerStore

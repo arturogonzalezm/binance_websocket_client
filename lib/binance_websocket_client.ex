@@ -1,4 +1,5 @@
 defmodule BinanceWebsocketClient do
+  @moduledoc false
   use WebSockex
   require Logger
 

@@ -1,4 +1,5 @@
 defmodule BinanceWebsocketClientWeb.TickerBroadcaster do
+  @moduledoc false
   use GenServer
   require Logger
   alias BinanceWebsocketClient.TickerStore

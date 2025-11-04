@@ -1,4 +1,5 @@
 defmodule BinanceWebsocketClient.Subscriber do
+  @moduledoc false
   use GenServer
   require Logger
 

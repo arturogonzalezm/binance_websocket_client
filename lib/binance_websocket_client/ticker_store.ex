@@ -1,4 +1,5 @@
 defmodule BinanceWebsocketClient.TickerStore do
+  @moduledoc false
   use GenServer
   require Logger
 

@@ -1,4 +1,5 @@
 defmodule BinanceWebsocketClient.WebSocketClientStub do
+  @moduledoc false
   @behaviour WebSockex
 
   def start_link(_url, module, state, _opts) do
