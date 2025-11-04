@@ -14,24 +14,14 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
 
       - name: Install Erlang/OTP and Elixir
-        uses: erlef/setup-beam@v1.18.0
+        uses: erlef/setup-beam@v1
         with:
           otp-version: '28.x'
           elixir-version: '1.19.x'
-
-      - name: Cache deps and build
-        uses: actions/cache@v4
-        with:
-          path: |
-            deps
-            _build
-            ~/.mix
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-mix-
+          cache: true
 
       - name: Install dependencies
         run: mix deps.get --only $MIX_ENV
