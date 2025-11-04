@@ -3,12 +3,6 @@ defmodule BinanceWebsocketClient do
   use WebSockex
   require Logger
 
-  @websocket_client Application.compile_env(
-                      :binance_websocket_client,
-                      :websocket_client,
-                      WebSockex
-                    )
-
   # Public API
   def latest(store \\ BinanceWebsocketClient.TickerStore) do
     BinanceWebsocketClient.TickerStore.get_latest(store)
@@ -30,7 +24,11 @@ defmodule BinanceWebsocketClient do
 
     Logger.info("Connecting to WS: #{url}")
 
-    @websocket_client.start_link(
+    websocket_client =
+      Keyword.get(opts, :websocket_client) ||
+        Application.get_env(:binance_websocket_client, :websocket_client, WebSockex)
+
+    websocket_client.start_link(
       url,
       __MODULE__,
       %{ticker_store: Keyword.get(opts, :ticker_store, BinanceWebsocketClient.TickerStore)},
