@@ -1,4 +1,5 @@
 defmodule BinanceWebsocketClientWeb.UserSocket do
+  @moduledoc false
   use Phoenix.Socket
 
   channel("ticker:*", BinanceWebsocketClientWeb.TickerChannel)

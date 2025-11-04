@@ -1,4 +1,5 @@
 defmodule BinanceWebsocketClientWeb.Endpoint do
+  @moduledoc false
   use Phoenix.Endpoint, otp_app: :binance_websocket_client
 
   socket("/socket", BinanceWebsocketClientWeb.UserSocket,
