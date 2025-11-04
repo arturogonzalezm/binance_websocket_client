@@ -7,8 +7,14 @@ defmodule BinanceWebsocketClient.Application do
     Logger.info("Starting BinanceWebsocketClient.Application")
 
     children = [
+      # Data pipeline
       {BinanceWebsocketClient.TickerStore, []},
-      {BinanceWebsocketClient, []}
+      {BinanceWebsocketClient, []},
+      # Phoenix PubSub and Endpoint for Channels
+      {Phoenix.PubSub, name: BinanceWebsocketClient.PubSub},
+      BinanceWebsocketClientWeb.Endpoint,
+      # Bridge from TickerStore to Phoenix Channel broadcasts
+      {BinanceWebsocketClientWeb.TickerBroadcaster, []}
     ]
 
     opts = [strategy: :one_for_one, name: BinanceWebsocketClient.Supervisor]

@@ -38,6 +38,9 @@ defmodule BinanceWebsocketClient.MixProject do
     [
       {:websockex, "~> 0.4.3"},
       {:jason, "~> 1.4"},
+      {:phoenix, "~> 1.7"},
+      {:phoenix_pubsub, "~> 2.1"},
+      {:plug_cowboy, "~> 2.6"},
       {:mox, "~> 1.1.0", only: :test},
       {:credo, "~> 1.7.8", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},

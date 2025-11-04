@@ -143,6 +143,74 @@ mix test
 - Add Datadog for infrastructure monitoring
 - Build a front-end for visualising the data in real-time using Phoenix LiveView
 
+## Phoenix Channels Frontend
+
+A minimal Phoenix Endpoint with Channels is included so you can consume real-time BTCUSDT ticker updates over WebSockets.
+
+- Endpoint: ws://localhost:4000/socket
+- Channel: "ticker:btcusdt"
+- Events:
+  - latest: pushed once on join with the current ticker if available
+  - update: pushed on every new ticker update from Binance
+
+### How to run the endpoint
+
+1. Fetch new dependencies and compile:
+   ```bash
+   mix deps.get
+   mix compile
+   ```
+2. Start the application (this also starts the Phoenix endpoint):
+   ```bash
+   iex -S mix
+   ```
+
+You should now have a WebSocket server running at ws://localhost:4000/socket.
+
+### JavaScript usage (browser)
+
+You can use Phoenix's JavaScript client to connect and receive updates. Example using a CDN:
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>BTCUSDT Ticker</title>
+    <script src="https://unpkg.com/phoenix@1.7.14/priv/static/phoenix.min.js"></script>
+  </head>
+  <body>
+    <pre id="log"></pre>
+    <script>
+      const log = (msg, data) => {
+        const el = document.getElementById("log");
+        el.textContent += `\n${msg} ${data ? JSON.stringify(data) : ''}`;
+      };
+
+      const socket = new window.Phoenix.Socket("ws://localhost:4000/socket", { params: {} });
+      socket.connect();
+
+      const channel = socket.channel("ticker:btcusdt", {});
+
+      channel.on("latest", (payload) => log("latest:", payload));
+      channel.on("update", (payload) => log("update:", payload));
+
+      channel.join()
+        .receive("ok", () => log("joined ticker:btcusdt"))
+        .receive("error", resp => log("join error:", resp));
+    </script>
+  </body>
+</html>
+```
+
+### Elixir usage (via Phoenix.ChannelTest / clients)
+
+From Elixir, you can also write a small client using Phoenix Channels protocol libraries, but for most frontend uses, the JS client above is recommended.
+
+Notes:
+- The WebSocket server only exposes the channel and does not serve HTML pages.
+- The topic is currently fixed to BTCUSDT. If you expand to multiple pairs, broadcast to corresponding topics like "ticker:ethusdt".
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
